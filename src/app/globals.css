@@ -1,0 +1,35 @@
+:root{--brand:#00a6d6;--ink:#0b1f2a;--bg:#f5f8fa;--card:#fff;--line:#dbe4ea;--muted:#5b6b75;--ok:#0a8a4a;--bad:#c62828}
+@media (prefers-color-scheme:dark){:root{--ink:#e8f1f5;--bg:#0c161c;--card:#13222b;--line:#25394420;--muted:#9bb0ba}}
+*{box-sizing:border-box}
+body{margin:0;font:16px/1.55 system-ui,sans-serif;color:var(--ink);background:var(--bg)}
+a{color:var(--brand)}
+.container{max-width:1000px;margin:0 auto;padding:0 16px}
+.nav{background:var(--card);border-bottom:1px solid var(--line)}
+.nav-inner{display:flex;justify-content:space-between;align-items:center;height:56px}
+.brand{font-weight:700;text-decoration:none;color:var(--ink)}
+.hero{padding:48px 0 24px;text-align:center}
+.hero h1{font-size:clamp(2rem,5vw,3rem);margin:0 0 8px}
+.search{display:flex;gap:8px;max-width:520px;margin:20px auto}
+input,textarea,button{font:inherit;padding:10px 12px;border:1px solid var(--line);border-radius:8px;background:var(--card);color:var(--ink)}
+.search input{flex:1}
+button{background:var(--brand);color:#fff;border:0;cursor:pointer;font-weight:600}
+textarea{width:100%;margin:8px 0 16px}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+@media(max-width:800px){.grid{grid-template-columns:1fr}}
+.card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:16px}
+table{width:100%;border-collapse:collapse}
+td,th{padding:6px 4px;text-align:left}
+td input{width:100%;min-width:56px;padding:6px 8px}
+.source{white-space:pre-wrap}
+mark{background:#ffe08a;color:#000;border-radius:3px;padding:0 2px}
+.warn{background:#fff3cd;color:#5c4400;padding:10px 12px;border-radius:8px}
+.muted{color:var(--muted)}
+.result{margin-top:16px;padding:12px;border-radius:8px;background:var(--bg);display:grid;gap:4px}
+.result strong{font-size:1.6rem}
+.result.pass{border-left:4px solid var(--ok)}.result.fail{border-left:4px solid var(--bad)}
+.inline{width:70px;padding:4px 8px}
+.facts{display:grid;grid-template-columns:max-content 1fr;gap:4px 16px}
+.facts dt{color:var(--muted)}.facts dd{margin:0}
+.footer{color:var(--muted);font-size:.85rem;padding:32px 16px}
+.sr-only{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
+details{background:var(--card);border:1px solid var(--line);border-radius:8px;padding:8px 12px;margin:8px 0}
