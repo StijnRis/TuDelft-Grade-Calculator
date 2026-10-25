@@ -1,89 +1,77 @@
 import { htmlToText } from "@/lib/assessment/parse";
+import { parseEcts, parseYear } from "./osiris";
 
 export interface Course {
+  id: number;
   code: string;
   name: string;
+  year: string;
   ects?: number;
-  language?: string;
-  faculty?: string;
-  responsible?: string;
-  period?: string;
-  /** Description as plain text. */
-  description?: string;
-  /** Raw (HTML) assessment text exactly as the study guide provides it. */
+  deepLink?: string;
+  /** Assessment description as plain text, ready for `parseAssessment`. */
   assessmentText: string;
-  /** Any other scalar fields the API returned, shown as-is. */
-  extra: Array<{ label: string; value: string }>;
+  /** Every non-empty field of the course page as plain text. */
+  sections: Array<{ title: string; text: string }>;
 }
 
 type Json = Record<string, unknown>;
+const isObj = (v: unknown): v is Json => !!v && typeof v === "object" && !Array.isArray(v);
+const str = (v: unknown) => (v === null || v === undefined ? "" : String(v).trim());
 
-const KEYS = {
-  code: ["code", "courseCode", "course_code", "Code"],
-  name: ["name", "title", "courseName", "Name", "Title"],
-  ects: ["ects", "credits", "ECTS", "Credits"],
-  language: ["language", "Language", "instructionLanguage"],
-  faculty: ["faculty", "Faculty", "department"],
-  responsible: ["responsible", "responsibleInstructor", "coordinator", "Responsible"],
-  period: ["period", "Period", "education_period"],
-  description: ["description", "Description", "summary", "content"],
-  assessment: ["assessment", "Assessment", "examination", "assessmentForm", "toetsing"],
-} as const;
+/** Rubriek or field names that hold the assessment ("toetsing", "tentamen", ...). */
+const ASSESSMENT = /toets|tentam|exam|assess/i;
 
-/** Resolve plain strings, numbers and `{en, nl}` style localized objects. */
-function asText(v: unknown): string | undefined {
-  if (typeof v === "string") return v.trim() || undefined;
-  if (typeof v === "number") return String(v);
-  if (v && typeof v === "object" && !Array.isArray(v)) {
-    const o = v as Json;
-    for (const k of ["en", "EN", "en-GB", "nl", "NL"]) {
-      const t = asText(o[k]);
-      if (t) return t;
+interface Field { veld: string; titel: string; waarde: string }
+
+function flatten(velden: unknown): Field[] {
+  const out: Field[] = [];
+  for (const v of Array.isArray(velden) ? velden : []) {
+    if (!isObj(v)) continue;
+    const waarde = v.waarde;
+    if (isObj(waarde) && Array.isArray(waarde.velden)) {
+      out.push(...flatten(waarde.velden));
+    } else if (typeof waarde === "string" || typeof waarde === "number") {
+      out.push({ veld: str(v.veld), titel: str(v.titel), waarde: String(waarde) });
     }
   }
-  return undefined;
+  return out;
 }
 
-function pick(obj: Json, keys: readonly string[]): { key?: string; value?: string } {
-  for (const k of keys) {
-    const value = asText(obj[k]);
-    if (value !== undefined) return { key: k, value };
-  }
-  return {};
-}
+export function normalizeCourseDetail(raw: unknown, id: number): Course {
+  const items = isObj(raw) && Array.isArray(raw.items) ? raw.items : [];
+  if (!items.length) throw new Error("Unexpected course payload");
 
-export function normalizeCourse(raw: unknown): Course {
-  if (!raw || typeof raw !== "object" || Array.isArray(raw)) {
-    throw new Error("Unexpected course payload");
-  }
-  const o = raw as Json;
-  const used = new Set<string>();
-  const get = (field: keyof typeof KEYS) => {
-    const { key, value } = pick(o, KEYS[field]);
-    if (key) used.add(key);
-    return value;
-  };
+  const kop: Record<string, string> = {};
+  const sections: Course["sections"] = [];
+  const assessment: string[] = [];
 
-  const code = get("code");
-  const name = get("name");
+  for (const item of items) {
+    if (!isObj(item)) continue;
+    const rubriek = str(item.rubriek);
+    const fields = flatten(item.velden);
+    if (rubriek === "rubriek-kop") {
+      for (const f of fields) kop[f.veld] = f.waarde;
+      continue;
+    }
+    for (const f of fields) {
+      const plain = htmlToText(f.waarde);
+      if (!plain) continue;
+      sections.push({ title: f.titel || f.veld, text: plain });
+      if (ASSESSMENT.test(rubriek) || ASSESSMENT.test(f.veld)) assessment.push(plain);
+    }
+  }
+
+  const code = str(kop.cursus);
+  const name = str(kop.cursus_lange_naam) || str(kop.cursus_korte_naam) || code;
   if (!code && !name) throw new Error("Course payload has neither a code nor a name");
-  const ects = get("ects");
-  const description = get("description");
-
-  const extra = Object.entries(o)
-    .filter(([k, v]) => !used.has(k) && !k.startsWith("_") && asText(v) !== undefined)
-    .map(([label, v]) => ({ label, value: htmlToText(asText(v)!) }));
-
   return {
-    code: code ?? "",
-    name: name ?? code ?? "",
-    ects: ects !== undefined && !Number.isNaN(parseFloat(ects)) ? parseFloat(ects) : undefined,
-    language: get("language"),
-    faculty: get("faculty"),
-    responsible: get("responsible"),
-    period: get("period"),
-    description: description ? htmlToText(description) : undefined,
-    assessmentText: get("assessment") ?? "",
-    extra,
+    id,
+    code,
+    name,
+    year: parseYear(kop.collegejaar),
+    ects: parseEcts(kop.punten),
+    deepLink: str(kop.deeplink_detailscherm_extern) || undefined,
+    assessmentText: assessment.join("\n"),
+    sections,
   };
 }

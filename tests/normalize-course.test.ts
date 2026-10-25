@@ -1,37 +1,40 @@
 import { describe, expect, it } from "vitest";
-import fixture from "./fixtures/course.assumed.json";
-import { normalizeCourse } from "@/lib/api/normalize";
+import course from "./fixtures/osiris-course.json";
+import { normalizeCourseDetail } from "@/lib/api/normalize";
 
-describe("normalizeCourse", () => {
-  it("maps a course payload", () => {
-    const c = normalizeCourse(fixture);
+describe("normalizeCourseDetail", () => {
+  it("builds a course from rubrieken", () => {
+    const c = normalizeCourseDetail(course, 901);
     expect(c).toMatchObject({
+      id: 901,
       code: "CS1234",
       name: "Algorithms & Data Structures",
-      ects: 5,
-      language: "English",
-      faculty: "EEMCS",
+      year: "2025-2026",
+      deepLink: "https://studiegids.tudelft.nl/x",
     });
-    expect(c.assessmentText).toContain("Written exam");
+    expect(c.sections).toContainEqual({ title: "Course Contents", text: "Learn to design algorithms." });
   });
 
-  it("accepts alternative key names and nested objects", () => {
-    const c = normalizeCourse({
-      Code: "AE1111",
-      Title: { en: "Flight Mechanics" },
-      Credits: "4",
-      Assessment: { en: "Exam (100%)" },
-    });
-    expect(c).toMatchObject({ code: "AE1111", name: "Flight Mechanics", ects: 4 });
-    expect(c.assessmentText).toBe("Exam (100%)");
+  it("extracts assessment text from exam-like sections", () => {
+    const c = normalizeCourseDetail(course, 901);
+    expect(c.assessmentText).toContain("Written exam (70%");
+    expect(c.assessmentText).not.toContain("<p>");
   });
 
-  it("collects unknown scalar fields as extra info", () => {
-    const c = normalizeCourse({ code: "X1", name: "X", foo: "bar", nested: { a: 1 } });
-    expect(c.extra).toContainEqual({ label: "foo", value: "bar" });
+  it("skips empty fields and header section from the generic sections", () => {
+    const c = normalizeCourseDetail(course, 901);
+    expect(c.sections.every((s) => s.text)).toBe(true);
+    expect(c.sections.find((s) => s.title === "cursus")).toBeUndefined();
   });
 
-  it("throws on junk input", () => {
-    expect(() => normalizeCourse(null)).toThrow();
+  it("leaves assessment empty when none is present", () => {
+    const c = normalizeCourseDetail({ items: [{ rubriek: "rubriek-kop", velden: [{ veld: "cursus", waarde: "X1" }] }] }, 1);
+    expect(c.assessmentText).toBe("");
+    expect(c.name).toBe("X1");
+  });
+
+  it("throws on junk", () => {
+    expect(() => normalizeCourseDetail(null, 1)).toThrow();
+    expect(() => normalizeCourseDetail({ items: [] }, 1)).toThrow();
   });
 });

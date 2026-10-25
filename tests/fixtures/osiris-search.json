@@ -1,0 +1,11 @@
+{
+  "_note": "Shaped after the Osiris Student API as parsed by github.com/mitkozh/osiris-mcp-server (not yet recorded from tudelft.osiris-student.nl). Replace with a real response when reachable.",
+  "hits": {
+    "total": { "value": 3, "relation": "eq" },
+    "hits": [
+      { "_source": { "id_cursus": 901, "cursus": "CS1234", "collegejaar": "2025-2026", "cursus_korte_naam": "A&DS", "cursus_lange_naam": "Algorithms & Data Structures", "faculteit": "EEMCS", "faculteit_naam": "Electrical Engineering, Mathematics and Computer Science", "punten": 5, "voertalen": [{ "voertaal_omschrijving": "English" }], "docenten": [{ "docent": "Dr. A. Teacher" }] } },
+      { "_source": { "id_cursus": 801, "cursus": "CS1234", "collegejaar": "2024-2025", "cursus_lange_naam": "Algorithms & Data Structures", "faculteit": "EEMCS", "punten": "5,0" } },
+      { "_source": { "id_cursus": 902, "cursus": "AE1111", "collegejaar": 2025, "cursus_lange_naam": "Flight Mechanics", "punten": 4 } }
+    ]
+  }
+}

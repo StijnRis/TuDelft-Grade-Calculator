@@ -4,15 +4,21 @@ Unofficial grade calculator for TU Delft courses (inspired by uqmarks.com). Next
 
 - `src/lib/assessment/parse.ts` – parses free-form assessment text into weighted components (keeps the source fragment of each).
 - `src/lib/grades/calc.ts` – final grade / required grade logic.
-- `src/lib/api/` – study guide client + normalizer.
+- `src/lib/api/` – Osiris Student API client (search + course detail), normalizer and a cached course index.
 
-## Known limitation: study guide API is unverified
+Course data is fetched in the browser when a course is requested (nothing is prebuilt). Searches
+by code or name are answered from a localStorage-persisted index (code, name, years) that grows as
+you search, and only hit the network for queries it has not covered.
 
-The environment this was built in could not reach `studiegids.tudelft.nl`, so the endpoint
-(`src/lib/api/client.ts` → `courseUrl`) and field mapping (`normalize.ts`) are **assumptions**
-covered by a fixture (`tests/fixtures/course.assumed.json`). Inspect the real XHR requests in your
-browser dev tools, then update those two files and the fixture. The API must also allow CORS for
-a pure client-side app. The `/calculator` page (paste assessment text) works regardless.
+## Known limitation: API not yet verified live
+
+TU Delft's study guide is backed by the Osiris Student API at `https://tudelft.osiris-student.nl/student/osiris`
+(`POST student/cursussen/zoeken`, `GET owc/cursussen/{id}`). The request/response shapes were taken
+from the open-source [osiris-mcp-server](https://github.com/mitkozh/osiris-mcp-server) client,
+because the environment this was built in could not reach TU Delft hosts. Still to confirm in a
+browser: that the host serves TU Delft, that CORS allows the custom `taal`/`client_type` headers,
+and which rubriek holds the assessment (`ASSESSMENT` regex in `normalize.ts`). Then replace
+`tests/fixtures/osiris-*.json` with recorded responses. Override the host with `NEXT_PUBLIC_OSIRIS_BASE`.
 
 ## Develop
 

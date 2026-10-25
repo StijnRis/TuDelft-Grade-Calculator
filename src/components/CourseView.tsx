@@ -7,7 +7,9 @@ import type { Course } from "@/lib/api/normalize";
 import GradeCalculator from "./GradeCalculator";
 
 export default function CourseView() {
-  const code = useSearchParams().get("code") ?? "";
+  const params = useSearchParams();
+  const code = params.get("code") ?? "";
+  const year = params.get("year") ?? undefined;
   const [course, setCourse] = useState<Course>();
   const [error, setError] = useState<string>();
 
@@ -16,12 +18,12 @@ export default function CourseView() {
     const ctl = new AbortController();
     setCourse(undefined);
     setError(undefined);
-    fetchCourse(code, { signal: ctl.signal })
+    fetchCourse(code, { year, signal: ctl.signal })
       .then(setCourse)
       .catch((e: Error) => e.name !== "AbortError" && setError(e.message));
     document.title = `${code} grade calculator | TU Delft Grade Calculator`;
     return () => ctl.abort();
-  }, [code]);
+  }, [code, year]);
 
   if (!code) return <p>No course code given. <Link href="/">Search for a course</Link>.</p>;
   if (error) return (
@@ -37,14 +39,13 @@ export default function CourseView() {
     <>
       <h1>{course.code} – {course.name}</h1>
       <dl className="facts">
+        {course.year && <><dt>Year</dt><dd>{course.year}</dd></>}
         {course.ects !== undefined && <><dt>ECTS</dt><dd>{course.ects}</dd></>}
-        {course.language && <><dt>Language</dt><dd>{course.language}</dd></>}
-        {course.faculty && <><dt>Faculty</dt><dd>{course.faculty}</dd></>}
-        {course.period && <><dt>Period</dt><dd>{course.period}</dd></>}
-        {course.responsible && <><dt>Responsible</dt><dd>{course.responsible}</dd></>}
-        {course.extra.map((e) => <><dt key={`t${e.label}`}>{e.label}</dt><dd key={`d${e.label}`}>{e.value}</dd></>)}
+        {course.deepLink && <><dt>Study guide</dt><dd><a href={course.deepLink}>Open official page</a></dd></>}
       </dl>
-      {course.description && <p>{course.description}</p>}
+      {course.sections.map((s, i) => (
+        <details key={i}><summary>{s.title}</summary><p>{s.text}</p></details>
+      ))}
       <GradeCalculator assessmentText={course.assessmentText} />
     </>
   );

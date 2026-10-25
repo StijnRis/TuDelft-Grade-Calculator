@@ -1,0 +1,19 @@
+{
+  "_note": "Shaped after the Osiris Student API (GET owc/cursussen/{id}); rubriek names for assessment are a best guess until recorded live.",
+  "items": [
+    { "rubriek": "rubriek-kop", "velden": [
+      { "veld": "cursus", "waarde": "CS1234" },
+      { "veld": "collegejaar", "waarde": 2025 },
+      { "veld": "cursus_korte_naam", "waarde": "A&DS" },
+      { "veld": "cursus_lange_naam", "waarde": "Algorithms & Data Structures" },
+      { "veld": "deeplink_detailscherm_extern", "waarde": "https://studiegids.tudelft.nl/x" }
+    ] },
+    { "rubriek": "rubriek-inhoud", "velden": [
+      { "veld": "inhoud", "titel": "Course Contents", "waarde": "<p>Learn to design algorithms.</p>" }
+    ] },
+    { "rubriek": "rubriek-toetsing", "velden": [
+      { "veld": "toetsvorm", "titel": "Assessment", "waarde": "<p>Written exam (70%, minimum grade 5.0) and programming assignment (30%).</p>" }
+    ] },
+    { "rubriek": "rubriek-leeg", "velden": [ { "veld": "x", "waarde": null } ] }
+  ]
+}
