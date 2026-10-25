@@ -1,9 +1,10 @@
 "use client";
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { fetchCourse } from "@/lib/api/client";
 import type { Course } from "@/lib/api/normalize";
+import { assessmentFromTests } from "@/lib/assessment/from-tests";
 import GradeCalculator from "./GradeCalculator";
 
 export default function CourseView() {
@@ -11,6 +12,7 @@ export default function CourseView() {
   const code = params.get("code") ?? "";
   const year = params.get("year") ?? undefined;
   const [course, setCourse] = useState<Course>();
+  const assessment = useMemo(() => (course ? assessmentFromTests(course.tests) : undefined), [course]);
   const [error, setError] = useState<string>();
 
   useEffect(() => {
@@ -46,7 +48,7 @@ export default function CourseView() {
       {course.sections.map((s, i) => (
         <details key={i}><summary>{s.title}</summary><p>{s.text}</p></details>
       ))}
-      <GradeCalculator assessmentText={course.assessmentText} />
+      <GradeCalculator assessment={assessment} />
     </>
   );
 }

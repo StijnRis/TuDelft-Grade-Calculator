@@ -36,8 +36,9 @@ export function parseEcts(value: unknown): number | undefined {
 
 export interface SearchOptions {
   keyword?: string;
-  codes?: string[];
   year?: string;
+  /** Restrict the returned `_source` fields (keeps big pages small). */
+  source?: string[];
   limit?: number;
   offset?: number;
 }
@@ -55,13 +56,13 @@ export function buildSearchQuery(o: SearchOptions) {
       },
     });
   }
-  if (o.codes?.length) must.push({ terms: { cursus: o.codes } });
   if (o.year) must.push({ term: { collegejaar: parseYear(o.year) } });
   return {
+    ...(o.source && { _source: o.source }),
     query: { bool: { must } },
     sort: [{ collegejaar: { order: "desc" } }],
     track_total_hits: true,
-    size: Math.max(1, Math.min(o.limit ?? 10, 100)),
+    size: Math.max(1, Math.min(o.limit ?? 10, 10_000)),
     from: Math.max(0, o.offset ?? 0),
   };
 }

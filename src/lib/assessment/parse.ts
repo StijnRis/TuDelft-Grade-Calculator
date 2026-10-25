@@ -21,6 +21,7 @@ export interface ParsedAssessment {
 
 export function htmlToText(input: string): string {
   return input
+    .replace(/<\s*(head|style|script)\b[^>]*>[\s\S]*?<\s*\/\s*\1\s*>/gi, "")
     .replace(/<\s*(br|\/p|\/li|\/div|\/h\d)\b[^>]*>/gi, "\n")
     .replace(/<[^>]*>/g, "")
     .replace(/&nbsp;/g, " ")

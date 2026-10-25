@@ -1,11 +1,169 @@
 {
-  "_note": "Shaped after the Osiris Student API as parsed by github.com/mitkozh/osiris-mcp-server (not yet recorded from tudelft.osiris-student.nl). Replace with a real response when reachable.",
-  "hits": {
-    "total": { "value": 3, "relation": "eq" },
-    "hits": [
-      { "_source": { "id_cursus": 901, "cursus": "CS1234", "collegejaar": "2025-2026", "cursus_korte_naam": "A&DS", "cursus_lange_naam": "Algorithms & Data Structures", "faculteit": "EEMCS", "faculteit_naam": "Electrical Engineering, Mathematics and Computer Science", "punten": 5, "voertalen": [{ "voertaal_omschrijving": "English" }], "docenten": [{ "docent": "Dr. A. Teacher" }] } },
-      { "_source": { "id_cursus": 801, "cursus": "CS1234", "collegejaar": "2024-2025", "cursus_lange_naam": "Algorithms & Data Structures", "faculteit": "EEMCS", "punten": "5,0" } },
-      { "_source": { "id_cursus": 902, "cursus": "AE1111", "collegejaar": 2025, "cursus_lange_naam": "Flight Mechanics", "punten": 4 } }
+ "took": 9,
+ "timed_out": false,
+ "_shards": {
+  "total": 1,
+  "successful": 1,
+  "skipped": 0,
+  "failed": 0
+ },
+ "hits": {
+  "total": {
+   "value": 1,
+   "relation": "eq"
+  },
+  "max_score": null,
+  "hits": [
+   {
+    "_index": "tudprd_cursussen-en-20261024230519",
+    "_id": "FRq7b6EB4uqpTnIz3WnB",
+    "_score": null,
+    "_source": {
+     "id_cursus": 125437,
+     "cursus": "AE1111",
+     "collegejaar": "2026-2027",
+     "cursus_korte_naam": "Exploring Aerospace Engineering and Desi",
+     "cursus_lange_naam": "Exploring Aerospace Engineering and Design",
+     "opmerking_cursus": "",
+     "categorie_omschrijving": "Bachelor Course",
+     "faculteit": "LR",
+     "faculteit_naam": "Aerospace Engineering",
+     "coordinerend_onderdeel_oms": "LR general",
+     "punten": "5",
+     "punteneenheid": "EC",
+     "cursustype_omschrijving": "Course",
+     "bijvakker": "Open for students taking subsidiary courses",
+     "wachtlijst": "N",
+     "voertalen": [
+      {
+       "voertaal_omschrijving": "English"
+      }
+     ],
+     "vrij_veld_1": [],
+     "vrij_veld_2": [],
+     "vrij_veld_3": [],
+     "vrij_veld_4": [],
+     "vrij_veld_5": [],
+     "vrij_veld_6": [],
+     "blokken": [
+      {
+       "collegejaar": "2026-2027",
+       "blok": "1",
+       "periode_omschrijving": "Block 1",
+       "periode_lange_omschrijving": "Block 1 until Block 2 (31-08-2026 until 07-02-2027)",
+       "opmerking": "",
+       "timeslots": [],
+       "aanvangsmaand": "August",
+       "beschikbaarheid": "J",
+       "locatie": ""
+      }
+     ],
+     "blokken_nested": [
+      {
+       "collegejaar": "2026-2027",
+       "blok": "1",
+       "periode_omschrijving": "Block 1",
+       "periode_lange_omschrijving": "Block 1 until Block 2 (31-08-2026 until 07-02-2027)",
+       "opmerking": "",
+       "timeslots": [],
+       "aanvangsmaand": "August",
+       "beschikbaarheid": "J",
+       "locatie": ""
+      }
+     ],
+     "docenten": [
+      {
+       "docent": "Peeters, D.M.J. (Dani\u00ebl)"
+      },
+      {
+       "docent": "Bos, E.J. van den (Eddy)"
+      },
+      {
+       "docent": "Roling, P.C. (Paul)"
+      },
+      {
+       "docent": "Roling, P.C. (Paul)"
+      }
+     ],
+     "competenties": [],
+     "aspecten_academische_vorming": [],
+     "inschrijfperiodes_cursus": [],
+     "inschrijfperiodes_toets": [
+      {
+       "datum_vanaf": "2026-12-31T23:00:00Z",
+       "datum_tm": "2027-01-08T22:59:59Z"
+      },
+      {
+       "datum_vanaf": "2026-11-18T23:00:00Z",
+       "datum_tm": "2026-12-31T22:59:59Z"
+      }
+     ],
+     "onderdelen_intern": [],
+     "onderdelen_extern": [],
+     "examenonderdelen": [
+      {
+       "id_examenonderdeel": 35544
+      },
+      {
+       "id_examenonderdeel": 25668
+      },
+      {
+       "id_examenonderdeel": 18142
+      },
+      {
+       "id_examenonderdeel": 37627
+      },
+      {
+       "id_examenonderdeel": 4761
+      },
+      {
+       "id_examenonderdeel": 7120
+      },
+      {
+       "id_examenonderdeel": 18148
+      },
+      {
+       "id_examenonderdeel": 27814
+      },
+      {
+       "id_examenonderdeel": 31503
+      },
+      {
+       "id_examenonderdeel": 33809
+      },
+      {
+       "id_examenonderdeel": 5265
+      },
+      {
+       "id_examenonderdeel": 17554
+      },
+      {
+       "id_examenonderdeel": 10197
+      },
+      {
+       "id_examenonderdeel": 11408
+      },
+      {
+       "id_examenonderdeel": 13070
+      },
+      {
+       "id_examenonderdeel": 20492
+      },
+      {
+       "id_examenonderdeel": 22734
+      },
+      {
+       "id_examenonderdeel": 29671
+      },
+      {
+       "id_examenonderdeel": 39437
+      }
+     ]
+    },
+    "sort": [
+     "2026-2027"
     ]
-  }
+   }
+  ]
+ }
 }

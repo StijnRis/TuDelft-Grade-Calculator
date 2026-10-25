@@ -1,0 +1,571 @@
+{
+ "items": [
+  {
+   "rubriek": "rubriek-links",
+   "velden": [
+    {
+     "veld": "item-links",
+     "waarde": [
+      {
+       "velden": []
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "rubriek": "rubriek-zoek",
+   "titel": "",
+   "weergave": "UIT",
+   "velden": [
+    {
+     "veld": "item-faculteit-zoek",
+     "titel": "Faculty",
+     "waarde": "Technology, Policy and Management"
+    },
+    {
+     "veld": "item-coordinerend-onderdeel-zoek",
+     "titel": "Coordinating unit",
+     "waarde": "TBM general"
+    },
+    {
+     "veld": "item-punten-zoek",
+     "titel": "Study points",
+     "waarde": "5 EC"
+    },
+    {
+     "veld": "item-categorie-zoek",
+     "titel": "Category",
+     "waarde": "Master Course"
+    },
+    {
+     "veld": "item-voertaal-zoek",
+     "titel": "Instruction language",
+     "waarde": "English"
+    },
+    {
+     "veld": "item-periodes-zoek",
+     "titel": "Period(s)"
+    }
+   ]
+  },
+  {
+   "rubriek": "rubriek-kop",
+   "titel": "",
+   "weergave": "UIT",
+   "velden": [
+    {
+     "veld": "cursus",
+     "waarde": "SEN173A"
+    },
+    {
+     "veld": "collegejaar",
+     "waarde": 2026
+    },
+    {
+     "veld": "cursus_korte_naam",
+     "waarde": "Analysis and Design of Freight and Logis"
+    },
+    {
+     "veld": "cursus_lange_naam",
+     "waarde": "Analysis and Design of Freight and Logistic Systems"
+    },
+    {
+     "veld": "id_cursus_cursusins",
+     "waarde": null
+    },
+    {
+     "veld": "id_cursus_blok_cursusins",
+     "waarde": null
+    },
+    {
+     "veld": "id_cursus_toetsins",
+     "waarde": null
+    },
+    {
+     "veld": "zowel_cursus_als_toetsins",
+     "waarde": "N"
+    },
+    {
+     "veld": "deeplink_detailscherm_extern",
+     "waarde": "https://tudelft.osiris-student.nl/onderwijscatalogus/extern/cursus?cursuscode=SEN173A&collegejaar=2026"
+    },
+    {
+     "veld": "item-url-plaatje",
+     "titel": "",
+     "gegevenstype": "",
+     "waarde": ""
+    }
+   ]
+  },
+  {
+   "rubriek": "rubriek-inhoud",
+   "titel": "Content",
+   "weergave": "IN",
+   "velden": [
+    {
+     "veld": "item-inhoud-toelichting",
+     "titel": "",
+     "waarde": "<html>\n<head>\n\t<title></title>\n\t<style type=\"text/css\">body { font-size: 9pt; font-family: Arial } table { font-size: 9pt; font-family: Arial }\n\t</style>\n</head>\n<body>het is een toelichting op inhoud</body>\n</html>\n"
+    }
+   ]
+  },
+  {
+   "rubriek": "rubriek-competenties",
+   "titel": "Competences",
+   "weergave": "IN",
+   "velden": []
+  },
+  {
+   "rubriek": "rubriek-praktische-info",
+   "titel": "Practical information",
+   "weergave": "IN",
+   "velden": [
+    {
+     "veld": "item-praktische-info-toelichting",
+     "titel": ""
+    },
+    {
+     "veld": "regio-links",
+     "titel": "",
+     "waarde": {
+      "velden": [
+       {
+        "veld": "item-punten",
+        "titel": "Credits",
+        "waarde": "5 EC"
+       },
+       {
+        "veld": "item-categorie",
+        "titel": "Category",
+        "waarde": "Master Course"
+       },
+       {
+        "veld": "item-voertaal",
+        "titel": "Instruction language",
+        "waarde": "English"
+       }
+      ]
+     }
+    },
+    {
+     "veld": "regio-rechts",
+     "titel": "",
+     "waarde": {
+      "velden": [
+       {
+        "veld": "item-aangeboden",
+        "titel": "Offered by",
+        "waarde": "Delft University of Technology - Technology, Policy and Management - TBM general -  -  -  - "
+       }
+      ]
+     }
+    }
+   ]
+  },
+  {
+   "rubriek": "rubriek-werkvormen",
+   "titel": "Instructional modes",
+   "weergave": "IN",
+   "velden": [
+    {
+     "veld": "item-werkvormen-toelichting",
+     "titel": ""
+    },
+    {
+     "veld": "tabel-werkvormen",
+     "titel": "Instructional modes",
+     "waarde": [
+      {
+       "omschrijving": "Education - general",
+       "velden": [
+        {
+         "veld": "item-werkvorm-werkvormtype",
+         "titel": "",
+         "waarde": ""
+        },
+        {
+         "veld": "item-werkvorm-bijeenkomsten",
+         "titel": "Number of meetings",
+         "waarde": ""
+        },
+        {
+         "veld": "item-werkvorm-aanwezigheid",
+         "titel": "Attendance requirement",
+         "waarde": "Yes"
+        },
+        {
+         "veld": "item-werkvorm-opmerking",
+         "titel": "Remark",
+         "waarde": ""
+        },
+        {
+         "veld": "item-werkvorm-toelichting",
+         "titel": "Explanation",
+         "waarde": ""
+        }
+       ]
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "rubriek": "rubriek-werkvormrooster",
+   "titel": "Instructional mode timetable",
+   "weergave": "",
+   "velden": [
+    {
+     "veld": "tabel-werkvormrooster",
+     "titel": "Instructional mode group",
+     "waarde": [
+      {
+       "omschrijving": "Block 4A",
+       "groepsindeling": false,
+       "velden": [
+        {
+         "werkvorm": "Education - general",
+         "velden": [
+          {
+           "werkvormgroep": "Group 1",
+           "velden": [
+            {
+             "veld": "item-werkvormrooster-rooster",
+             "titel": "Instructional mode timetable item",
+             "velden": []
+            }
+           ]
+          }
+         ]
+        }
+       ]
+      },
+      {
+       "omschrijving": "Block JAAR",
+       "groepsindeling": false,
+       "velden": [
+        {
+         "werkvorm": "Education - general",
+         "velden": [
+          {
+           "werkvormgroep": "Group 1",
+           "velden": [
+            {
+             "veld": "item-werkvormrooster-rooster",
+             "titel": "Instructional mode timetable item",
+             "velden": []
+            }
+           ]
+          }
+         ]
+        }
+       ]
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "rubriek": "rubriek-toetsen",
+   "titel": "Tests",
+   "weergave": "IN",
+   "velden": [
+    {
+     "veld": "tabel-toetsen",
+     "titel": "Tests",
+     "waarde": [
+      {
+       "omschrijving": "Assignment",
+       "samengestelde-toets": "",
+       "is_onderliggend_toets": "N",
+       "is_bovenliggende_toets": "N",
+       "velden": [
+        {
+         "veld": "item-toets-toetsvorm",
+         "titel": "",
+         "waarde": "Assignment"
+        },
+        {
+         "veld": "item-toets-weging",
+         "titel": "Test weight",
+         "waarde": "30"
+        },
+        {
+         "veld": "item-toets-minimum-cijfer",
+         "titel": "Minimum grade",
+         "waarde": "5.0"
+        },
+        {
+         "veld": "item-toets-punten",
+         "titel": "Credits",
+         "waarde": "1.5"
+        },
+        {
+         "veld": "item-toets-aantal-gelegenheden",
+         "titel": "Number of opportunities",
+         "waarde": "<b>Block JAAR: </b>1<BR><b>Block 4A: </b>2"
+        },
+        {
+         "veld": "item-toets-blokken",
+         "titel": "Opportunities",
+         "waarde": "<b>Block JAAR: </b>Block JAAR<BR><b>Block 4A: </b>Block 4B, Block 5AB"
+        },
+        {
+         "veld": "item-toets-resultaatschaal",
+         "titel": "Grading scale",
+         "waarde": "Integers with 1 decimal"
+        },
+        {
+         "veld": "item-samengestelde-toets-weging",
+         "titel": "Test weight",
+         "waarde": "30"
+        },
+        {
+         "veld": "item-samengestelde-toets-minimum-cijfer",
+         "titel": "Minimum grade",
+         "waarde": "5.0"
+        }
+       ]
+      },
+      {
+       "omschrijving": "Digital Exam",
+       "samengestelde-toets": "",
+       "is_onderliggend_toets": "N",
+       "is_bovenliggende_toets": "N",
+       "velden": [
+        {
+         "veld": "item-toets-toetsvorm",
+         "titel": "",
+         "waarde": "Exam \u2013 written (digital)"
+        },
+        {
+         "veld": "item-toets-weging",
+         "titel": "Test weight",
+         "waarde": "70"
+        },
+        {
+         "veld": "item-toets-minimum-cijfer",
+         "titel": "Minimum grade",
+         "waarde": "5.0"
+        },
+        {
+         "veld": "item-toets-punten",
+         "titel": "Credits",
+         "waarde": "3.5"
+        },
+        {
+         "veld": "item-toets-aantal-gelegenheden",
+         "titel": "Number of opportunities",
+         "waarde": "<b>Block JAAR: </b>1<BR><b>Block 4A: </b>2"
+        },
+        {
+         "veld": "item-toets-blokken",
+         "titel": "Opportunities",
+         "waarde": "<b>Block JAAR: </b>Block JAAR<BR><b>Block 4A: </b>Block 4B, Block 5AB"
+        },
+        {
+         "veld": "item-toets-resultaatschaal",
+         "titel": "Grading scale",
+         "waarde": "Integers with 1 decimal"
+        },
+        {
+         "veld": "item-samengestelde-toets-weging",
+         "titel": "Test weight",
+         "waarde": "70"
+        },
+        {
+         "veld": "item-samengestelde-toets-minimum-cijfer",
+         "titel": "Minimum grade",
+         "waarde": "5.0"
+        }
+       ]
+      }
+     ]
+    },
+    {
+     "veld": "regio-beoordeling",
+     "titel": "Assessment",
+     "waarde": {
+      "velden": [
+       {
+        "veld": "item-geldend-resultaat",
+        "titel": "",
+        "waarde": "<html>\n<head>\n\t<title></title>\n</head>\n<body>If there are several final results, the highest result counts.</body>\n</html>\n"
+       },
+       {
+        "veld": "item-voldoende-grens",
+        "titel": "",
+        "waarde": "<html>\n<head>\n\t<title></title>\n</head>\n<body>You must achieve a minimum of 6 for the course</body>\n</html>\n"
+       },
+       {
+        "veld": "item-aantal-onvoldoende-toetsen",
+        "titel": "",
+        "waarde": "<html>\n<head>\n\t<title></title>\n</head>\n<body>You may obtain an insufficient result for a maximum of  tests</body>\n</html>\n"
+       }
+      ]
+     }
+    }
+   ]
+  },
+  {
+   "rubriek": "rubriek-ingang",
+   "titel": "Entrance requirements",
+   "weergave": "IN",
+   "velden": []
+  },
+  {
+   "rubriek": "rubriek-inschrijven",
+   "titel": "Course enrolment",
+   "weergave": "IN",
+   "velden": [
+    {
+     "veld": "item-inschrijven-osiris-student-j",
+     "titel": "OSIRIS Student",
+     "waarde": "<html>\n<head>\n\t<title></title>\n</head>\n<body>You can register yourself via OSIRIS Student. To do so, go to Enroll / Course.</body>\n</html>\n"
+    },
+    {
+     "veld": "item-aanmeldingsprocedure",
+     "titel": "Application procedure",
+     "waarde": "Application by means of OSIRIS Student"
+    },
+    {
+     "veld": "tabel-inschrijfperiodes",
+     "titel": "Enrolment periods",
+     "waarde": [
+      {
+       "omschrijving": "Block JAAR",
+       "id_cursus_inschrijving": 201265,
+       "velden": [
+        {
+         "veld": "item-inschrijfperiode-onderwijs",
+         "titel": "Period of education",
+         "waarde": "1 september 2026 until 31 augustus 2027"
+        }
+       ]
+      },
+      {
+       "omschrijving": "Block 4A until Block 4B",
+       "id_cursus_inschrijving": 201264,
+       "velden": [
+        {
+         "veld": "item-inschrijfperiode-onderwijs",
+         "titel": "Period of education",
+         "waarde": "19 april 2027 until 27 juni 2027"
+        }
+       ]
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "rubriek": "rubriek-toets-inschrijven",
+   "titel": "Test enrolment",
+   "weergave": "IN",
+   "velden": [
+    {
+     "veld": "item-toets-wachtlijst-j",
+     "titel": "Waiting list",
+     "waarde": "<html>\n<head>\n\t<title></title>\n</head>\n<body>When the maximum number of participants of the test is reached you can be placed on the waiting list. You can still be registered if there are places available.</body>\n</html>\n"
+    },
+    {
+     "veld": "item-toets-inschrijven-osiris-student-j",
+     "titel": "OSIRIS Student",
+     "waarde": "<html>\n<head>\n\t<title></title>\n</head>\n<body>You can register yourself via OSIRIS Student. To do so, go to Enroll / Test.</body>\n</html>\n"
+    },
+    {
+     "veld": "tabel-toets-inschrijfperiodes",
+     "titel": "Enrolment periods",
+     "waarde": [
+      {
+       "omschrijving": "Assignment",
+       "blokken": [
+        {
+         "blok": "Block JAAR",
+         "velden": []
+        },
+        {
+         "blok": "Block 4B",
+         "velden": []
+        },
+        {
+         "blok": "Block 5AB",
+         "velden": []
+        }
+       ]
+      },
+      {
+       "omschrijving": "Digital Exam",
+       "blokken": [
+        {
+         "blok": "Block JAAR",
+         "velden": []
+        },
+        {
+         "blok": "Block 4B",
+         "velden": []
+        },
+        {
+         "blok": "Block 5AB",
+         "velden": []
+        }
+       ]
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "rubriek": "rubriek-docenten",
+   "titel": "Lecturers",
+   "weergave": "IN",
+   "velden": [
+    {
+     "veld": "tabel-docenten",
+     "titel": "Lecturers",
+     "waarde": [
+      {
+       "omschrijving": "Contactperson for the course",
+       "velden": [
+        {
+         "docent": "Prof.dr.ir. L.A. Tavasszy",
+         "url_medewerker": "",
+         "velden": []
+        }
+       ]
+      },
+      {
+       "omschrijving": "Lecturer",
+       "velden": [
+        {
+         "docent": "Dr. S. Fazi",
+         "url_medewerker": "",
+         "velden": []
+        },
+        {
+         "docent": "Dr.ir. A.J. van Binsbergen",
+         "url_medewerker": "",
+         "velden": []
+        },
+        {
+         "docent": "Dr.ir. M. Saeednia",
+         "url_medewerker": "",
+         "velden": []
+        },
+        {
+         "docent": "Prof.dr.ir. L.A. Tavasszy",
+         "url_medewerker": "",
+         "velden": []
+        }
+       ]
+      }
+     ]
+    }
+   ]
+  }
+ ],
+ "hasMore": false,
+ "limit": 0,
+ "offset": 0,
+ "count": 13
+}

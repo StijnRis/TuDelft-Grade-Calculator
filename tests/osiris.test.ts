@@ -1,5 +1,6 @@
 import { describe, expect, it } from "vitest";
 import search from "./fixtures/osiris-search.json";
+import catalogue from "./fixtures/osiris-catalogue.json";
 import { buildSearchQuery, parseSearchResponse, parseYear } from "@/lib/api/osiris";
 
 describe("parseYear", () => {
@@ -21,11 +22,16 @@ describe("buildSearchQuery", () => {
     expect(q.sort[0]).toEqual({ collegejaar: { order: "desc" } });
   });
 
-  it("filters on exact code and year", () => {
-    const q = buildSearchQuery({ codes: ["CS1234"], year: "2025" });
-    const must = q.query.bool.must;
-    expect(must).toContainEqual({ terms: { cursus: ["CS1234"] } });
-    expect(must).toContainEqual({ term: { collegejaar: "2025-2026" } });
+  it("filters on year", () => {
+    const q = buildSearchQuery({ year: "2025" });
+    expect(q.query.bool.must).toContainEqual({ term: { collegejaar: "2025-2026" } });
+  });
+
+  it("can request the whole catalogue with a trimmed _source", () => {
+    const q = buildSearchQuery({ limit: 5000, source: ["cursus"] });
+    expect(q.size).toBe(5000);
+    expect(q._source).toEqual(["cursus"]);
+    expect(buildSearchQuery({ limit: 99999 }).size).toBe(10000);
   });
 
   it("ignores one-character keywords", () => {
@@ -34,20 +40,32 @@ describe("buildSearchQuery", () => {
 });
 
 describe("parseSearchResponse", () => {
-  it("maps hits and total", () => {
+  it("maps a recorded TU Delft hit", () => {
     const { hits, total } = parseSearchResponse(search);
-    expect(total).toBe(3);
+    expect(total).toBe(1);
     expect(hits[0]).toMatchObject({
-      id: 901,
-      code: "CS1234",
-      name: "Algorithms & Data Structures",
-      year: "2025-2026",
+      id: 125437,
+      code: "AE1111",
+      name: "Exploring Aerospace Engineering and Design",
+      year: "2026-2027",
       ects: 5,
+      faculty: "Aerospace Engineering",
       languages: ["English"],
-      lecturers: ["Dr. A. Teacher"],
     });
-    expect(hits[1].ects).toBe(5);
-    expect(hits[2].year).toBe("2025-2026");
+    // the API lists one lecturer twice
+    expect(hits[0].lecturers).toHaveLength(3);
+  });
+
+  it("maps a trimmed catalogue page", () => {
+    const { hits, total } = parseSearchResponse(catalogue);
+    expect(total).toBe(2549);
+    expect(hits).toHaveLength(6);
+    expect(hits[0]).toMatchObject({ code: "AESM306A-24", ects: 9 });
+  });
+
+  it("tolerates comma decimals and numeric years", () => {
+    const { hits } = parseSearchResponse({ hits: { total: 1, hits: [{ _source: { id_cursus: 1, cursus: "X", collegejaar: 2025, punten: "2,5" } }] } });
+    expect(hits[0]).toMatchObject({ ects: 2.5, year: "2025-2026", name: "X" });
   });
 
   it("returns nothing for junk", () => {

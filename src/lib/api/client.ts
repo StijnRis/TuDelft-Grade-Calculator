@@ -33,16 +33,25 @@ async function request(path: string, opts: Options, body?: unknown): Promise<unk
 
 export async function searchRemote(
   keyword: string,
-  opts: Options & { limit?: number; codes?: string[]; year?: string } = {},
+  opts: Options & { limit?: number; year?: string } = {},
 ): Promise<{ hits: CourseHit[]; total: number }> {
-  const query = buildSearchQuery({ keyword, codes: opts.codes, year: opts.year, limit: opts.limit });
+  const query = buildSearchQuery({ keyword, year: opts.year, limit: opts.limit });
+  return parseSearchResponse(await request("student/cursussen/zoeken", opts, query));
+}
+
+const CATALOGUE_FIELDS = ["id_cursus", "cursus", "collegejaar", "cursus_lange_naam", "cursus_korte_naam", "punten", "faculteit_naam"];
+
+/** Every course in the portal (~2,500 offerings, <100 kB gzipped) in a single request. */
+export async function fetchCatalogue(opts: Options = {}): Promise<{ hits: CourseHit[]; total: number }> {
+  const query = buildSearchQuery({ limit: 10_000, source: CATALOGUE_FIELDS });
   return parseSearchResponse(await request("student/cursussen/zoeken", opts, query));
 }
 
 /** Fetch a course by code; the newest offering unless `year` is given. */
 export async function fetchCourse(code: string, opts: Options & { year?: string } = {}): Promise<Course> {
   const wanted = code.trim().toUpperCase();
-  const { hits } = await searchRemote("", { ...opts, codes: [wanted], limit: 20 });
+  // A plain keyword search is the only code lookup the portal supports; filter to the exact code.
+  const { hits } = await searchRemote(wanted, { ...opts, limit: 50 });
   const offerings = hits.filter((h) => h.code.toUpperCase() === wanted);
   const year = opts.year ? parseYear(opts.year) : "";
   const pick = year

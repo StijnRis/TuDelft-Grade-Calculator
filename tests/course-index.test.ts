@@ -67,6 +67,16 @@ describe("CourseIndex", () => {
     expect(ix.search("cs1")).toHaveLength(1);
   });
 
+  it("remembers that the full catalogue was loaded, until stale", () => {
+    const storage = mem();
+    const ix = new CourseIndex({ storage, now: () => 0 });
+    expect(ix.isComplete()).toBe(false);
+    ix.add([hit("CS1", "A", "2025-2026")]);
+    ix.markComplete();
+    expect(new CourseIndex({ storage, now: () => 10, ttlMs: 100 }).isComplete()).toBe(true);
+    expect(new CourseIndex({ storage, now: () => 1000, ttlMs: 100 }).isComplete()).toBe(false);
+  });
+
   it("only persists when something changed", () => {
     const storage = mem();
     const spy = vi.spyOn(storage, "setItem");

@@ -23,9 +23,9 @@ const WEEK = 7 * 24 * 3600 * 1000;
 const fold = (s: string) => s.normalize("NFD").replace(/[̀-ͯ]/g, "").toLowerCase();
 
 /**
- * Local, persisted catalogue of course codes, names and years. Filled as the
- * user searches (learn-as-you-go), so repeated and refined searches are
- * answered instantly without touching the study guide.
+ * Local, persisted catalogue of course codes, names and years. TU Delft's
+ * whole catalogue is small, so it is loaded once and every search after that
+ * is answered locally and instantly.
  */
 export class CourseIndex {
   private courses = new Map<string, IndexedCourse>();
@@ -33,6 +33,7 @@ export class CourseIndex {
   private now: () => number;
   private ttl: number;
   private key: string;
+  private completedAt?: number;
 
   constructor(o: Options = {}) {
     this.storage = o.storage;
@@ -63,6 +64,16 @@ export class CourseIndex {
     if (changed) this.save();
   }
 
+  /** True when the whole catalogue was loaded recently, so local search is exhaustive. */
+  isComplete(): boolean {
+    return this.completedAt !== undefined && this.now() - this.completedAt <= this.ttl;
+  }
+
+  markComplete(): void {
+    this.completedAt = this.now();
+    this.save();
+  }
+
   search(query: string, limit = 10): IndexedCourse[] {
     const words = fold(query).split(/\s+/).filter(Boolean);
     if (!words.length) return [];
@@ -83,9 +94,10 @@ export class CourseIndex {
     try {
       const raw = this.storage?.getItem(this.key);
       if (!raw) return;
-      const data = JSON.parse(raw) as { savedAt: number; courses: IndexedCourse[] };
+      const data = JSON.parse(raw) as { savedAt: number; completedAt?: number; courses: IndexedCourse[] };
       if (this.now() - data.savedAt > this.ttl) return;
       for (const c of data.courses) this.courses.set(c.code, c);
+      this.completedAt = data.completedAt;
     } catch {
       /* corrupt or unavailable storage: start empty */
     }
@@ -93,7 +105,7 @@ export class CourseIndex {
 
   private save(): void {
     try {
-      this.storage?.setItem(this.key, JSON.stringify({ savedAt: this.now(), courses: [...this.courses.values()] }));
+      this.storage?.setItem(this.key, JSON.stringify({ savedAt: this.now(), completedAt: this.completedAt, courses: [...this.courses.values()] }));
     } catch {
       /* quota or blocked storage: keep working in memory */
     }

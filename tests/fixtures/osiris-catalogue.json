@@ -1,0 +1,121 @@
+{
+ "took": 76,
+ "timed_out": false,
+ "_shards": {
+  "total": 1,
+  "successful": 1,
+  "skipped": 0,
+  "failed": 0
+ },
+ "hits": {
+  "total": {
+   "value": 2549,
+   "relation": "eq"
+  },
+  "max_score": null,
+  "hits": [
+   {
+    "_index": "tudprd_cursussen-en-20261024230519",
+    "_id": "Nxq7b6EB4uqpTnIzwWdg",
+    "_score": null,
+    "_source": {
+     "id_cursus": 124927,
+     "cursus": "AESM306A-24",
+     "collegejaar": "2026-2027",
+     "cursus_korte_naam": "Extraction Proc. and Conseq.of Raw Mat.",
+     "cursus_lange_naam": "Extraction Processes and Consequences of Raw Materials",
+     "faculteit_naam": "Civil Engineering and Geosciences",
+     "punten": "9"
+    },
+    "sort": [
+     "2026-2027"
+    ]
+   },
+   {
+    "_index": "tudprd_cursussen-en-20261024230519",
+    "_id": "OBq7b6EB4uqpTnIzwWdg",
+    "_score": null,
+    "_source": {
+     "id_cursus": 124930,
+     "cursus": "AESM401B-24",
+     "collegejaar": "2026-2027",
+     "cursus_korte_naam": "Climate and Weather B-module",
+     "cursus_lange_naam": "Climate and Weather B-module",
+     "faculteit_naam": "Civil Engineering and Geosciences",
+     "punten": "15"
+    },
+    "sort": [
+     "2026-2027"
+    ]
+   },
+   {
+    "_index": "tudprd_cursussen-en-20261024230519",
+    "_id": "ORq7b6EB4uqpTnIzwWdg",
+    "_score": null,
+    "_source": {
+     "id_cursus": 124931,
+     "cursus": "AESM402B-24",
+     "collegejaar": "2026-2027",
+     "cursus_korte_naam": "Earth Observation B-module",
+     "cursus_lange_naam": "Earth Observation B-module",
+     "faculteit_naam": "Civil Engineering and Geosciences",
+     "punten": "15"
+    },
+    "sort": [
+     "2026-2027"
+    ]
+   },
+   {
+    "_index": "tudprd_cursussen-en-20261024230519",
+    "_id": "Ohq7b6EB4uqpTnIzwWdg",
+    "_score": null,
+    "_source": {
+     "id_cursus": 124932,
+     "cursus": "AESM403B-24",
+     "collegejaar": "2026-2027",
+     "cursus_korte_naam": "Geo-Energy B-module",
+     "cursus_lange_naam": "Geo-Energy B-module",
+     "faculteit_naam": "Civil Engineering and Geosciences",
+     "punten": "15"
+    },
+    "sort": [
+     "2026-2027"
+    ]
+   },
+   {
+    "_index": "tudprd_cursussen-en-20261024230519",
+    "_id": "Oxq7b6EB4uqpTnIzwWdg",
+    "_score": null,
+    "_source": {
+     "id_cursus": 124933,
+     "cursus": "AESM404B-24",
+     "collegejaar": "2026-2027",
+     "cursus_korte_naam": "Geo-resources B-module",
+     "cursus_lange_naam": "Geo-resources B-module",
+     "faculteit_naam": "Civil Engineering and Geosciences",
+     "punten": "15"
+    },
+    "sort": [
+     "2026-2027"
+    ]
+   },
+   {
+    "_index": "tudprd_cursussen-en-20261024230519",
+    "_id": "PBq7b6EB4uqpTnIzwWdg",
+    "_score": null,
+    "_source": {
+     "id_cursus": 124934,
+     "cursus": "CIEAESM4010",
+     "collegejaar": "2026-2027",
+     "cursus_korte_naam": "Honours Programme MSc Research project",
+     "cursus_lange_naam": "Honours Programme MSc Research project",
+     "faculteit_naam": "Civil Engineering and Geosciences",
+     "punten": "10"
+    },
+    "sort": [
+     "2026-2027"
+    ]
+   }
+  ]
+ }
+}

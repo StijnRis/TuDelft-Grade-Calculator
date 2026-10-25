@@ -13,6 +13,8 @@ export default function CourseSearch() {
   const [results, setResults] = useState<IndexedCourse[]>([]);
   const [busy, setBusy] = useState(false);
 
+  useEffect(() => { courseSearch().warm(); }, []);
+
   useEffect(() => {
     const q = query.trim();
     if (q.length < 2) return setResults([]);
@@ -22,7 +24,7 @@ export default function CourseSearch() {
     setBusy(true);
     const t = setTimeout(() => {
       s.search(q).then((r) => !stale && setResults(r)).finally(() => !stale && setBusy(false));
-    }, 250);
+    }, 100);
     return () => { stale = true; clearTimeout(t); };
   }, [query]);
 

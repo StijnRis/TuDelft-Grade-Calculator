@@ -1,12 +1,12 @@
 "use client";
 import { useMemo, useState } from "react";
-import { parseAssessment } from "@/lib/assessment/parse";
+import { parseAssessment, type ParsedAssessment } from "@/lib/assessment/parse";
 import { finalGrade, requiredGrade, roundGrade } from "@/lib/grades/calc";
 
 interface Row { name: string; weight: number; minGrade?: number; source: string }
 
-export default function GradeCalculator({ assessmentText }: { assessmentText: string }) {
-  const parsed = useMemo(() => parseAssessment(assessmentText), [assessmentText]);
+export default function GradeCalculator({ assessmentText = "", assessment }: { assessmentText?: string; assessment?: ParsedAssessment }) {
+  const parsed = useMemo(() => assessment ?? parseAssessment(assessmentText), [assessment, assessmentText]);
   const [overrides, setOverrides] = useState<Record<number, Partial<Row>>>({});
   const [grades, setGrades] = useState<Record<string, string>>({});
   const [goal, setGoal] = useState("5.5");
@@ -30,7 +30,7 @@ export default function GradeCalculator({ assessmentText }: { assessmentText: st
     <div className="grid">
       <section className="card">
         <h2>Assessment (as in the study guide)</h2>
-        {assessmentText ? (
+        {parsed.text ? (
           <p className="source">{highlight(parsed.text, rows.map((r) => r.source))}</p>
         ) : (
           <p className="muted">No assessment text available.</p>

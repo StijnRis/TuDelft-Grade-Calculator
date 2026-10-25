@@ -1,6 +1,15 @@
 import { htmlToText } from "@/lib/assessment/parse";
 import { parseEcts, parseYear } from "./osiris";
 
+export interface CourseTest {
+  name: string;
+  /** Relative weight as published (points or percent); absent when not numeric. */
+  weight?: number;
+  minGrade?: number;
+  /** Graded as sufficient/insufficient rather than with a number. */
+  passFail: boolean;
+}
+
 export interface Course {
   id: number;
   code: string;
@@ -8,56 +17,89 @@ export interface Course {
   year: string;
   ects?: number;
   deepLink?: string;
-  /** Assessment description as plain text, ready for `parseAssessment`. */
-  assessmentText: string;
-  /** Every non-empty field of the course page as plain text. */
+  tests: CourseTest[];
+  /** Readable course information (content, lecturers, assessment rules). */
   sections: Array<{ title: string; text: string }>;
 }
 
 type Json = Record<string, unknown>;
 const isObj = (v: unknown): v is Json => !!v && typeof v === "object" && !Array.isArray(v);
 const str = (v: unknown) => (v === null || v === undefined ? "" : String(v).trim());
+const num = (v: unknown): number | undefined => {
+  const s = str(v).replace(",", ".");
+  return /^\d+(\.\d+)?$/.test(s) ? parseFloat(s) : undefined;
+};
 
-/** Rubriek or field names that hold the assessment ("toetsing", "tentamen", ...). */
-const ASSESSMENT = /toets|tentam|exam|assess/i;
+/** Rubrieken shown as sections, with a fallback title when the field has none. */
+const SECTIONS: Record<string, string> = {
+  "rubriek-inhoud": "Content",
+  "rubriek-docenten": "Lecturers",
+  "rubriek-toetsen": "Assessment",
+};
 
-interface Field { veld: string; titel: string; waarde: string }
+const velden = (v: unknown): Json[] => (Array.isArray(v) ? v.filter(isObj) : []);
 
-function flatten(velden: unknown): Field[] {
-  const out: Field[] = [];
-  for (const v of Array.isArray(velden) ? velden : []) {
-    if (!isObj(v)) continue;
-    const waarde = v.waarde;
-    if (isObj(waarde) && Array.isArray(waarde.velden)) {
-      out.push(...flatten(waarde.velden));
-    } else if (typeof waarde === "string" || typeof waarde === "number") {
-      out.push({ veld: str(v.veld), titel: str(v.titel), waarde: String(waarde) });
-    }
+/** Plain text of a field value: strings, nested `velden` regions and row tables. */
+function leaves(waarde: unknown): string {
+  if (typeof waarde === "string" || typeof waarde === "number") return htmlToText(String(waarde));
+  if (Array.isArray(waarde)) {
+    return waarde
+      .filter(isObj)
+      .map((row) => {
+        const inner = velden(row.velden)
+          .map((f) => (f.docent !== undefined ? str(f.docent) : labelled(f)))
+          .filter(Boolean)
+          .join(", ");
+        return [str(row.omschrijving), inner].filter(Boolean).join(": ");
+      })
+      .filter(Boolean)
+      .join("\n");
   }
-  return out;
+  if (isObj(waarde)) return velden(waarde.velden).map(labelled).filter(Boolean).join("\n");
+  return "";
+}
+
+function labelled(f: Json): string {
+  const t = leaves(f.waarde);
+  return t && str(f.titel) ? `${str(f.titel)}: ${t}` : t;
+}
+
+function parseTests(rows: unknown): CourseTest[] {
+  return (Array.isArray(rows) ? rows.filter(isObj) : []).map((row) => {
+    const f: Record<string, string> = {};
+    for (const v of velden(row.velden)) f[str(v.veld)] = str(v.waarde);
+    const minRaw = f["item-toets-minimum-cijfer"] ?? "";
+    const minGrade = num(minRaw);
+    const passFail = /sufficient|satisfactory|pass/i.test(`${minRaw} ${f["item-toets-resultaatschaal"] ?? ""}`) && minGrade === undefined;
+    return {
+      name: str(row.omschrijving) || "Test",
+      weight: num(f["item-toets-weging"]),
+      minGrade,
+      passFail,
+    };
+  });
 }
 
 export function normalizeCourseDetail(raw: unknown, id: number): Course {
-  const items = isObj(raw) && Array.isArray(raw.items) ? raw.items : [];
+  const items = isObj(raw) ? velden(raw.items) : [];
   if (!items.length) throw new Error("Unexpected course payload");
 
   const kop: Record<string, string> = {};
   const sections: Course["sections"] = [];
-  const assessment: string[] = [];
+  let tests: CourseTest[] = [];
+  let points: string | undefined;
 
   for (const item of items) {
-    if (!isObj(item)) continue;
     const rubriek = str(item.rubriek);
-    const fields = flatten(item.velden);
-    if (rubriek === "rubriek-kop") {
-      for (const f of fields) kop[f.veld] = f.waarde;
-      continue;
-    }
-    for (const f of fields) {
-      const plain = htmlToText(f.waarde);
-      if (!plain) continue;
-      sections.push({ title: f.titel || f.veld, text: plain });
-      if (ASSESSMENT.test(rubriek) || ASSESSMENT.test(f.veld)) assessment.push(plain);
+    for (const f of velden(item.velden)) {
+      const veld = str(f.veld);
+      if (rubriek === "rubriek-kop") kop[veld] = str(f.waarde);
+      else if (veld === "item-punten-zoek") points = str(f.waarde);
+      else if (veld === "tabel-toetsen") tests = parseTests(f.waarde);
+      else if (rubriek in SECTIONS) {
+        const text = leaves(f.waarde);
+        if (text) sections.push({ title: str(f.titel) || SECTIONS[rubriek], text });
+      }
     }
   }
 
@@ -69,9 +111,9 @@ export function normalizeCourseDetail(raw: unknown, id: number): Course {
     code,
     name,
     year: parseYear(kop.collegejaar),
-    ects: parseEcts(kop.punten),
+    ects: parseEcts(points),
     deepLink: str(kop.deeplink_detailscherm_extern) || undefined,
-    assessmentText: assessment.join("\n"),
+    tests,
     sections,
   };
 }

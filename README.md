@@ -6,19 +6,28 @@ Unofficial grade calculator for TU Delft courses (inspired by uqmarks.com). Next
 - `src/lib/grades/calc.ts` – final grade / required grade logic.
 - `src/lib/api/` – Osiris Student API client (search + course detail), normalizer and a cached course index.
 
-Course data is fetched in the browser when a course is requested (nothing is prebuilt). Searches
-by code or name are answered from a localStorage-persisted index (code, name, years) that grows as
-you search, and only hit the network for queries it has not covered.
+Course data is fetched in the browser when a course is requested (nothing is prebuilt). The whole
+catalogue (~2,500 courses, <100 kB gzipped) is loaded in one request and cached in localStorage
+for a week, so searching by code or name is instant.
 
-## Known limitation: API not yet verified live
+## The study guide API (verified 2026-10-25)
 
-TU Delft's study guide is backed by the Osiris Student API at `https://tudelft.osiris-student.nl/student/osiris`
-(`POST student/cursussen/zoeken`, `GET owc/cursussen/{id}`). The request/response shapes were taken
-from the open-source [osiris-mcp-server](https://github.com/mitkozh/osiris-mcp-server) client,
-because the environment this was built in could not reach TU Delft hosts. Still to confirm in a
-browser: that the host serves TU Delft, that CORS allows the custom `taal`/`client_type` headers,
-and which rubriek holds the assessment (`ASSESSMENT` regex in `normalize.ts`). Then replace
-`tests/fixtures/osiris-*.json` with recorded responses. Override the host with `NEXT_PUBLIC_OSIRIS_BASE`.
+TU Delft's study guide runs on the Osiris Student API at `https://tudelft.osiris-student.nl/student/osiris`
+(headers `taal: EN`, `client_type: web`):
+
+- `POST student/cursussen/zoeken` – Elasticsearch-style search. Code lookup is a `phrase_prefix`
+  keyword search (a `terms` query on `cursus` returns nothing); only the current year is indexed.
+- `GET owc/cursussen/{id}` – course "rubrieken". `rubriek-toetsen` / `tabel-toetsen` is a structured
+  test table (relative weight, minimum grade), used directly by the calculator.
+
+Fixtures in `tests/fixtures/osiris-*.json` are recorded from the live portal.
+
+## Known blocker: CORS
+
+The portal answers `access-control-allow-origin: http://localhost:8080` on every real response, so a
+browser on any other origin (e.g. GitHub Pages) cannot read it. Node/curl are unaffected. A static
+site therefore needs either a small CORS proxy in front of the portal (set `NEXT_PUBLIC_OSIRIS_BASE`
+to it) or a build-time snapshot of the data.
 
 ## Develop
 

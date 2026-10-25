@@ -1,15 +1,20 @@
 import { describe, expect, it, vi } from "vitest";
 import search from "./fixtures/osiris-search.json";
 import course from "./fixtures/osiris-course.json";
-import { fetchCourse, searchRemote, OSIRIS_BASE } from "@/lib/api/client";
+import catalogue from "./fixtures/osiris-catalogue.json";
+import { fetchCatalogue, fetchCourse, searchRemote, OSIRIS_BASE } from "@/lib/api/client";
 
 const res = (body: unknown, status = 200) => ({ ok: status < 400, status, json: async () => body });
 
-/** Routes by URL: POST .../zoeken -> search, GET .../cursussen/{id} -> course. */
-function router(opts: { searchBody?: unknown; courseStatus?: number } = {}) {
-  return vi.fn(async (url: string, init?: RequestInit) => {
-    if (url.endsWith("/cursussen/zoeken")) return res(opts.searchBody ?? search);
-    if (/\/owc\/cursussen\/\d+$/.test(url)) return res(course, opts.courseStatus ?? 200);
+/** A second (older) offering derived from the recorded hit, to test year selection. */
+const older = structuredClone(search);
+Object.assign(older.hits.hits[0]._source, { id_cursus: 99, collegejaar: "2025-2026" });
+const twoYears = { hits: { total: { value: 2 }, hits: [search.hits.hits[0], older.hits.hits[0]] } };
+
+function router(searchBody: unknown = search) {
+  return vi.fn(async (url: string) => {
+    if (url.endsWith("/student/cursussen/zoeken")) return res(searchBody);
+    if (/\/owc\/cursussen\/\d+$/.test(url)) return res(course);
     return res({}, 404);
   });
 }
@@ -21,32 +26,47 @@ describe("osiris client", () => {
 
   it("POSTs the search with Osiris headers", async () => {
     const f = router();
-    const { hits } = await searchRemote("cs12", { fetch: f as never });
-    const [url, init] = f.mock.calls[0];
+    const { hits } = await searchRemote("ae11", { fetch: f as never });
+    const [url, init] = f.mock.calls[0] as unknown as [string, RequestInit];
     expect(url).toBe(`${OSIRIS_BASE}/student/cursussen/zoeken`);
-    expect(init?.method).toBe("POST");
-    expect(init?.headers).toMatchObject({ taal: "EN", client_type: "web", "Content-Type": "application/json" });
-    expect(JSON.parse(init?.body as string).query).toBeDefined();
-    expect(hits).toHaveLength(3);
+    expect(init.method).toBe("POST");
+    expect(init.headers).toMatchObject({ taal: "EN", client_type: "web", "Content-Type": "application/json" });
+    expect(JSON.parse(init.body as string).query).toBeDefined();
+    expect(hits).toHaveLength(1);
   });
 
-  it("resolves a code to the newest offering and fetches its detail", async () => {
+  it("loads the whole catalogue in one request", async () => {
+    const f = router(catalogue);
+    const { hits, total } = await fetchCatalogue({ fetch: f as never });
+    expect(f).toHaveBeenCalledTimes(1);
+    const body = JSON.parse((f.mock.calls[0] as unknown as [string, RequestInit])[1].body as string);
+    expect(body.size).toBeGreaterThan(2549);
+    expect(body._source).toContain("cursus_lange_naam");
+    expect(hits).toHaveLength(6);
+    expect(total).toBe(2549);
+  });
+
+  it("resolves a code by keyword search (exact match) and fetches the detail", async () => {
     const f = router();
-    const c = await fetchCourse("cs1234", { fetch: f as never });
-    expect(f.mock.calls[1][0]).toBe(`${OSIRIS_BASE}/owc/cursussen/901`);
-    expect(c.name).toBe("Algorithms & Data Structures");
-    expect(c.assessmentText).toContain("Written exam");
+    const c = await fetchCourse("ae1111", { fetch: f as never });
+    expect(JSON.stringify(JSON.parse((f.mock.calls[0] as unknown as [string, RequestInit])[1].body as string).query)).toContain('"query":"AE1111"');
+    expect(f.mock.calls[1][0]).toBe(`${OSIRIS_BASE}/owc/cursussen/125437`);
+    expect(c.name).toBe("Exploring Aerospace Engineering and Design");
+    expect(c.tests).toHaveLength(3);
   });
 
-  it("picks the requested year", async () => {
+  it("takes the newest offering, or the requested year", async () => {
+    const newest = router(twoYears);
+    await fetchCourse("AE1111", { fetch: newest as never });
+    expect(newest.mock.calls[1][0]).toMatch(/\/125437$/);
+    const picked = router(twoYears);
+    await fetchCourse("AE1111", { year: "2025", fetch: picked as never });
+    expect(picked.mock.calls[1][0]).toMatch(/\/99$/);
+  });
+
+  it("ignores prefix matches that are not the exact code", async () => {
     const f = router();
-    await fetchCourse("CS1234", { year: "2024-2025", fetch: f as never });
-    expect(f.mock.calls[1][0]).toBe(`${OSIRIS_BASE}/owc/cursussen/801`);
-  });
-
-  it("throws not found when the code has no exact match", async () => {
-    const f = router({ searchBody: { hits: { total: 0, hits: [] } } });
-    await expect(fetchCourse("ZZ9999", { fetch: f as never })).rejects.toThrow(/not found/i);
+    await expect(fetchCourse("AE11", { fetch: f as never })).rejects.toThrow(/not found/i);
   });
 
   it("throws on HTTP errors and network failures", async () => {

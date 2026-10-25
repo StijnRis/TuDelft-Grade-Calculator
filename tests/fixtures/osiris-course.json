@@ -1,19 +1,646 @@
 {
-  "_note": "Shaped after the Osiris Student API (GET owc/cursussen/{id}); rubriek names for assessment are a best guess until recorded live.",
-  "items": [
-    { "rubriek": "rubriek-kop", "velden": [
-      { "veld": "cursus", "waarde": "CS1234" },
-      { "veld": "collegejaar", "waarde": 2025 },
-      { "veld": "cursus_korte_naam", "waarde": "A&DS" },
-      { "veld": "cursus_lange_naam", "waarde": "Algorithms & Data Structures" },
-      { "veld": "deeplink_detailscherm_extern", "waarde": "https://studiegids.tudelft.nl/x" }
-    ] },
-    { "rubriek": "rubriek-inhoud", "velden": [
-      { "veld": "inhoud", "titel": "Course Contents", "waarde": "<p>Learn to design algorithms.</p>" }
-    ] },
-    { "rubriek": "rubriek-toetsing", "velden": [
-      { "veld": "toetsvorm", "titel": "Assessment", "waarde": "<p>Written exam (70%, minimum grade 5.0) and programming assignment (30%).</p>" }
-    ] },
-    { "rubriek": "rubriek-leeg", "velden": [ { "veld": "x", "waarde": null } ] }
-  ]
+ "items": [
+  {
+   "rubriek": "rubriek-links",
+   "velden": [
+    {
+     "veld": "item-links",
+     "waarde": [
+      {
+       "velden": []
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "rubriek": "rubriek-zoek",
+   "titel": "",
+   "weergave": "UIT",
+   "velden": [
+    {
+     "veld": "item-faculteit-zoek",
+     "titel": "Faculty",
+     "waarde": "Aerospace Engineering"
+    },
+    {
+     "veld": "item-coordinerend-onderdeel-zoek",
+     "titel": "Coordinating unit",
+     "waarde": "LR general"
+    },
+    {
+     "veld": "item-punten-zoek",
+     "titel": "Study points",
+     "waarde": "5 EC"
+    },
+    {
+     "veld": "item-categorie-zoek",
+     "titel": "Category",
+     "waarde": "Bachelor Course"
+    },
+    {
+     "veld": "item-voertaal-zoek",
+     "titel": "Instruction language",
+     "waarde": "English"
+    },
+    {
+     "veld": "item-periodes-zoek",
+     "titel": "Period(s)"
+    }
+   ]
+  },
+  {
+   "rubriek": "rubriek-kop",
+   "titel": "",
+   "weergave": "UIT",
+   "velden": [
+    {
+     "veld": "cursus",
+     "waarde": "AE1111"
+    },
+    {
+     "veld": "collegejaar",
+     "waarde": 2026
+    },
+    {
+     "veld": "cursus_korte_naam",
+     "waarde": "Exploring Aerospace Engineering and Desi"
+    },
+    {
+     "veld": "cursus_lange_naam",
+     "waarde": "Exploring Aerospace Engineering and Design"
+    },
+    {
+     "veld": "id_cursus_cursusins",
+     "waarde": null
+    },
+    {
+     "veld": "id_cursus_blok_cursusins",
+     "waarde": null
+    },
+    {
+     "veld": "id_cursus_toetsins",
+     "waarde": null
+    },
+    {
+     "veld": "zowel_cursus_als_toetsins",
+     "waarde": "N"
+    },
+    {
+     "veld": "deeplink_detailscherm_extern",
+     "waarde": "https://tudelft.osiris-student.nl/onderwijscatalogus/extern/cursus?cursuscode=AE1111&collegejaar=2026"
+    },
+    {
+     "veld": "item-url-plaatje",
+     "titel": "",
+     "gegevenstype": "",
+     "waarde": ""
+    }
+   ]
+  },
+  {
+   "rubriek": "rubriek-inhoud",
+   "titel": "Content",
+   "weergave": "IN",
+   "velden": [
+    {
+     "veld": "item-inhoud-toelichting",
+     "titel": "",
+     "waarde": "<html>\n<head>\n\t<title></title>\n\t<style type=\"text/css\">body { font-size: 9pt; font-family: Arial } table { font-size: 9pt; font-family: Arial }\n\t</style>\n</head>\n<body>het is een toelichting op inhoud</body>\n</html>\n"
+    }
+   ]
+  },
+  {
+   "rubriek": "rubriek-competenties",
+   "titel": "Competences",
+   "weergave": "IN",
+   "velden": []
+  },
+  {
+   "rubriek": "rubriek-praktische-info",
+   "titel": "Practical information",
+   "weergave": "IN",
+   "velden": [
+    {
+     "veld": "item-praktische-info-toelichting",
+     "titel": ""
+    },
+    {
+     "veld": "regio-links",
+     "titel": "",
+     "waarde": {
+      "velden": [
+       {
+        "veld": "item-punten",
+        "titel": "Credits",
+        "waarde": "5 EC"
+       },
+       {
+        "veld": "item-categorie",
+        "titel": "Category",
+        "waarde": "Bachelor Course"
+       },
+       {
+        "veld": "item-voertaal",
+        "titel": "Instruction language",
+        "waarde": "English"
+       }
+      ]
+     }
+    },
+    {
+     "veld": "regio-rechts",
+     "titel": "",
+     "waarde": {
+      "velden": [
+       {
+        "veld": "item-aangeboden",
+        "titel": "Offered by",
+        "waarde": "Delft University of Technology - Aerospace Engineering - LR general -  -  -  - "
+       }
+      ]
+     }
+    }
+   ]
+  },
+  {
+   "rubriek": "rubriek-werkvormen",
+   "titel": "Instructional modes",
+   "weergave": "IN",
+   "velden": [
+    {
+     "veld": "item-werkvormen-toelichting",
+     "titel": ""
+    },
+    {
+     "veld": "tabel-werkvormen",
+     "titel": "Instructional modes",
+     "waarde": [
+      {
+       "omschrijving": "Onderwijs - algemeen",
+       "velden": [
+        {
+         "veld": "item-werkvorm-werkvormtype",
+         "titel": "",
+         "waarde": ""
+        },
+        {
+         "veld": "item-werkvorm-bijeenkomsten",
+         "titel": "Number of meetings",
+         "waarde": ""
+        },
+        {
+         "veld": "item-werkvorm-aanwezigheid",
+         "titel": "Attendance requirement",
+         "waarde": "No"
+        },
+        {
+         "veld": "item-werkvorm-opmerking",
+         "titel": "Remark",
+         "waarde": ""
+        },
+        {
+         "veld": "item-werkvorm-toelichting",
+         "titel": "Explanation",
+         "waarde": ""
+        }
+       ]
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "rubriek": "rubriek-werkvormrooster",
+   "titel": "Instructional mode timetable",
+   "weergave": "",
+   "velden": [
+    {
+     "veld": "tabel-werkvormrooster",
+     "titel": "Instructional mode group",
+     "waarde": [
+      {
+       "omschrijving": "Block 1",
+       "groepsindeling": false,
+       "velden": [
+        {
+         "werkvorm": "Education - general",
+         "velden": [
+          {
+           "werkvormgroep": "Group 1",
+           "velden": [
+            {
+             "veld": "item-werkvormrooster-rooster",
+             "titel": "Instructional mode timetable item",
+             "velden": []
+            }
+           ]
+          }
+         ]
+        }
+       ]
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "rubriek": "rubriek-toetsen",
+   "titel": "Tests",
+   "weergave": "IN",
+   "velden": [
+    {
+     "veld": "tabel-toetsen",
+     "titel": "Tests",
+     "waarde": [
+      {
+       "omschrijving": "Engineering Drawing",
+       "samengestelde-toets": "",
+       "is_onderliggend_toets": "N",
+       "is_bovenliggende_toets": "N",
+       "velden": [
+        {
+         "veld": "item-toets-toetsvorm",
+         "titel": "",
+         "waarde": "Test"
+        },
+        {
+         "veld": "item-toets-weging",
+         "titel": "Test weight",
+         "waarde": "2"
+        },
+        {
+         "veld": "item-toets-minimum-cijfer",
+         "titel": "Minimum grade",
+         "waarde": "5.0"
+        },
+        {
+         "veld": "item-toets-punten",
+         "titel": "Credits",
+         "waarde": "2"
+        },
+        {
+         "veld": "item-toets-aantal-gelegenheden",
+         "titel": "Number of opportunities",
+         "waarde": "<b>Block 1: </b>2<BR><b>Block JAAR: </b>2"
+        },
+        {
+         "veld": "item-toets-blokken",
+         "titel": "Opportunities",
+         "waarde": "<b>Block 1: </b>Block 1, Block 2<BR><b>Block JAAR: </b>Block JAAR, Block JAAR"
+        },
+        {
+         "veld": "item-toets-resultaatschaal",
+         "titel": "Grading scale",
+         "waarde": "Integers with 1 decimal"
+        },
+        {
+         "veld": "item-samengestelde-toets-weging",
+         "titel": "Test weight",
+         "waarde": "2"
+        },
+        {
+         "veld": "item-samengestelde-toets-minimum-cijfer",
+         "titel": "Minimum grade",
+         "waarde": "5.0"
+        }
+       ]
+      },
+      {
+       "omschrijving": "Exploring Aerospace Engineering and Desi",
+       "samengestelde-toets": "",
+       "is_onderliggend_toets": "N",
+       "is_bovenliggende_toets": "N",
+       "velden": [
+        {
+         "veld": "item-toets-toetsvorm",
+         "titel": "",
+         "waarde": "Test"
+        },
+        {
+         "veld": "item-toets-weging",
+         "titel": "Test weight",
+         "waarde": "3"
+        },
+        {
+         "veld": "item-toets-minimum-cijfer",
+         "titel": "Minimum grade",
+         "waarde": "5.0"
+        },
+        {
+         "veld": "item-toets-punten",
+         "titel": "Credits",
+         "waarde": "3"
+        },
+        {
+         "veld": "item-toets-aantal-gelegenheden",
+         "titel": "Number of opportunities",
+         "waarde": "<b>Block 1: </b>3<BR><b>Block JAAR: </b>2"
+        },
+        {
+         "veld": "item-toets-blokken",
+         "titel": "Opportunities",
+         "waarde": "<b>Block 1: </b>Block 1, Block 2, Block 3<BR><b>Block JAAR: </b>Block JAAR, Block JAAR"
+        },
+        {
+         "veld": "item-toets-resultaatschaal",
+         "titel": "Grading scale",
+         "waarde": "Integers with 1 decimal"
+        },
+        {
+         "veld": "item-samengestelde-toets-weging",
+         "titel": "Test weight",
+         "waarde": "3"
+        },
+        {
+         "veld": "item-samengestelde-toets-minimum-cijfer",
+         "titel": "Minimum grade",
+         "waarde": "5.0"
+        }
+       ]
+      },
+      {
+       "omschrijving": "Mentor Programme",
+       "samengestelde-toets": "",
+       "is_onderliggend_toets": "N",
+       "is_bovenliggende_toets": "N",
+       "velden": [
+        {
+         "veld": "item-toets-toetsvorm",
+         "titel": "",
+         "waarde": "Test"
+        },
+        {
+         "veld": "item-toets-weging",
+         "titel": "Test weight",
+         "waarde": "1"
+        },
+        {
+         "veld": "item-toets-minimum-cijfer",
+         "titel": "Minimum grade",
+         "waarde": "A satisfactory result"
+        },
+        {
+         "veld": "item-toets-punten",
+         "titel": "Credits",
+         "waarde": "0"
+        },
+        {
+         "veld": "item-toets-aantal-gelegenheden",
+         "titel": "Number of opportunities",
+         "waarde": "<b>Block 1: </b>1<BR><b>Block JAAR: </b>2"
+        },
+        {
+         "veld": "item-toets-blokken",
+         "titel": "Opportunities",
+         "waarde": "<b>Block 1: </b>Block 1<BR><b>Block JAAR: </b>Block JAAR, Block JAAR"
+        },
+        {
+         "veld": "item-toets-resultaatschaal",
+         "titel": "Grading scale",
+         "waarde": "Insufficient / Sufficient"
+        },
+        {
+         "veld": "item-samengestelde-toets-weging",
+         "titel": "Test weight",
+         "waarde": "1"
+        },
+        {
+         "veld": "item-samengestelde-toets-minimum-cijfer",
+         "titel": "Minimum grade",
+         "waarde": "A satisfactory result"
+        }
+       ]
+      }
+     ]
+    },
+    {
+     "veld": "regio-beoordeling",
+     "titel": "Assessment",
+     "waarde": {
+      "velden": [
+       {
+        "veld": "item-geldend-resultaat",
+        "titel": "",
+        "waarde": "<html>\n<head>\n\t<title></title>\n</head>\n<body>If there are several final results, the highest result counts.</body>\n</html>\n"
+       },
+       {
+        "veld": "item-voldoende-grens",
+        "titel": "",
+        "waarde": "<html>\n<head>\n\t<title></title>\n</head>\n<body>You must achieve a minimum of 6 for the course</body>\n</html>\n"
+       },
+       {
+        "veld": "item-aantal-onvoldoende-toetsen",
+        "titel": "",
+        "waarde": "<html>\n<head>\n\t<title></title>\n</head>\n<body>You may obtain an insufficient result for a maximum of  tests</body>\n</html>\n"
+       }
+      ]
+     }
+    }
+   ]
+  },
+  {
+   "rubriek": "rubriek-ingang",
+   "titel": "Entrance requirements",
+   "weergave": "IN",
+   "velden": []
+  },
+  {
+   "rubriek": "rubriek-inschrijven",
+   "titel": "Course enrolment",
+   "weergave": "IN",
+   "velden": [
+    {
+     "veld": "item-inschrijven-osiris-student-j",
+     "titel": "OSIRIS Student",
+     "waarde": "<html>\n<head>\n\t<title></title>\n</head>\n<body>You can register yourself via OSIRIS Student. To do so, go to Enroll / Course.</body>\n</html>\n"
+    },
+    {
+     "veld": "item-aanmeldingsprocedure",
+     "titel": "Application procedure",
+     "waarde": "Application by means of OSIRIS Student"
+    },
+    {
+     "veld": "tabel-inschrijfperiodes",
+     "titel": "Enrolment periods",
+     "waarde": [
+      {
+       "omschrijving": "Block 1 until Block 2",
+       "id_cursus_inschrijving": 200121,
+       "velden": [
+        {
+         "veld": "item-inschrijfperiode-onderwijs",
+         "titel": "Period of education",
+         "waarde": "31 augustus 2026 until 7 februari 2027"
+        }
+       ]
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "rubriek": "rubriek-toets-inschrijven",
+   "titel": "Test enrolment",
+   "weergave": "IN",
+   "velden": [
+    {
+     "veld": "item-toets-wachtlijst-j",
+     "titel": "Waiting list",
+     "waarde": "<html>\n<head>\n\t<title></title>\n</head>\n<body>When the maximum number of participants of the test is reached you can be placed on the waiting list. You can still be registered if there are places available.</body>\n</html>\n"
+    },
+    {
+     "veld": "item-toets-inschrijven-osiris-student-j",
+     "titel": "OSIRIS Student",
+     "waarde": "<html>\n<head>\n\t<title></title>\n</head>\n<body>You can register yourself via OSIRIS Student. To do so, go to Enroll / Test.</body>\n</html>\n"
+    },
+    {
+     "veld": "tabel-toets-inschrijfperiodes",
+     "titel": "Enrolment periods",
+     "waarde": [
+      {
+       "omschrijving": "Engineering Drawing",
+       "blokken": [
+        {
+         "blok": "Block 1",
+         "velden": [
+          {
+           "veld": "item-toets-inschrijfperiode-inschrijven",
+           "titel": "Enrolment period",
+           "waarde": "1 September 2026 until 13 October 2026 23:59"
+          },
+          {
+           "veld": "item-toets-inschrijfperiode-na-inschrijven",
+           "titel": "Late enrolment",
+           "waarde": "14 October 2026 until 21 October 2026 23:59"
+          },
+          {
+           "veld": "item-toets-inschrijfperiode-uitschrijven",
+           "titel": "Unenrolment",
+           "waarde": "1 September 2026 until 21 October 2026 23:59"
+          },
+          {
+           "veld": "item-toets-inschrijfperiode-toetsdatum",
+           "titel": "Test date",
+           "waarde": "27 October 2026"
+          }
+         ]
+        },
+        {
+         "blok": "Block JAAR",
+         "velden": []
+        },
+        {
+         "blok": "Block 2",
+         "velden": []
+        }
+       ]
+      },
+      {
+       "omschrijving": "Exploring Aerospace Engineering and Desi",
+       "blokken": [
+        {
+         "blok": "Block 1",
+         "velden": []
+        },
+        {
+         "blok": "Block JAAR",
+         "velden": []
+        },
+        {
+         "blok": "Block 2",
+         "velden": [
+          {
+           "veld": "item-toets-inschrijfperiode-inschrijven",
+           "titel": "Enrolment period",
+           "waarde": "19 November 2026 until 31 December 2026 23:59"
+          },
+          {
+           "veld": "item-toets-inschrijfperiode-na-inschrijven",
+           "titel": "Late enrolment",
+           "waarde": "1 January 2027 until 8 January 2027 23:59"
+          },
+          {
+           "veld": "item-toets-inschrijfperiode-uitschrijven",
+           "titel": "Unenrolment",
+           "waarde": "19 November 2026 until 8 January 2027 23:59"
+          },
+          {
+           "veld": "item-toets-inschrijfperiode-toetsdatum",
+           "titel": "Test date",
+           "waarde": "14 January 2027"
+          }
+         ]
+        },
+        {
+         "blok": "Block 3",
+         "velden": []
+        }
+       ]
+      },
+      {
+       "omschrijving": "Mentor Programme",
+       "blokken": [
+        {
+         "blok": "Block 1",
+         "velden": []
+        },
+        {
+         "blok": "Block JAAR",
+         "velden": []
+        }
+       ]
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "rubriek": "rubriek-docenten",
+   "titel": "Lecturers",
+   "weergave": "IN",
+   "velden": [
+    {
+     "veld": "tabel-docenten",
+     "titel": "Lecturers",
+     "waarde": [
+      {
+       "omschrijving": "Contactperson for the course",
+       "velden": [
+        {
+         "docent": "Ir. P.C. Roling",
+         "url_medewerker": "",
+         "velden": []
+        }
+       ]
+      },
+      {
+       "omschrijving": "Lecturer",
+       "velden": [
+        {
+         "docent": "Dr.ir. D.M.J. Peeters",
+         "url_medewerker": "",
+         "velden": []
+        },
+        {
+         "docent": "E.J. van den Bos",
+         "url_medewerker": "",
+         "velden": []
+        },
+        {
+         "docent": "Ir. P.C. Roling",
+         "url_medewerker": "",
+         "velden": []
+        }
+       ]
+      }
+     ]
+    }
+   ]
+  }
+ ],
+ "hasMore": false,
+ "limit": 0,
+ "offset": 0,
+ "count": 13
 }

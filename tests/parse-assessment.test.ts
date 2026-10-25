@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { parseAssessment } from "@/lib/assessment/parse";
+import { htmlToText, parseAssessment } from "@/lib/assessment/parse";
 
 describe("parseAssessment", () => {
   it("parses a simple exam + assignment split", () => {
@@ -66,5 +66,12 @@ describe("parseAssessment", () => {
   it("strips HTML", () => {
     const r = parseAssessment("<p>Exam <b>(100%)</b></p>");
     expect(r.components).toMatchObject([{ name: "Exam", weight: 100 }]);
+  });
+});
+
+describe("htmlToText on full HTML documents", () => {
+  it("drops head, title and style content", () => {
+    const html = "<html><head><title>T</title><style type=\"text/css\">body { color: red }</style></head><body>Exam (100%)</body></html>";
+    expect(htmlToText(html)).toBe("Exam (100%)");
   });
 });
