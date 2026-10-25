@@ -2,7 +2,7 @@
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
 import { useEffect, useMemo, useState } from "react";
-import { fetchCourse } from "@/lib/api/client";
+import { loadCourse } from "@/lib/api/static-data";
 import type { Course } from "@/lib/api/normalize";
 import { assessmentFromTests } from "@/lib/assessment/from-tests";
 import GradeCalculator from "./GradeCalculator";
@@ -10,7 +10,6 @@ import GradeCalculator from "./GradeCalculator";
 export default function CourseView() {
   const params = useSearchParams();
   const code = params.get("code") ?? "";
-  const year = params.get("year") ?? undefined;
   const [course, setCourse] = useState<Course>();
   const assessment = useMemo(() => (course ? assessmentFromTests(course.tests) : undefined), [course]);
   const [error, setError] = useState<string>();
@@ -20,12 +19,12 @@ export default function CourseView() {
     const ctl = new AbortController();
     setCourse(undefined);
     setError(undefined);
-    fetchCourse(code, { year, signal: ctl.signal })
+    loadCourse(code, { signal: ctl.signal })
       .then(setCourse)
       .catch((e: Error) => e.name !== "AbortError" && setError(e.message));
     document.title = `${code} grade calculator | TU Delft Grade Calculator`;
     return () => ctl.abort();
-  }, [code, year]);
+  }, [code]);
 
   if (!code) return <p>No course code given. <Link href="/">Search for a course</Link>.</p>;
   if (error) return (
@@ -35,7 +34,7 @@ export default function CourseView() {
       <p>You can still <Link href="/calculator/">paste the assessment text manually</Link>.</p>
     </div>
   );
-  if (!course) return <p aria-busy="true">Loading {code} from the study guide…</p>;
+  if (!course) return <p aria-busy="true">Loading {code} …</p>;
 
   return (
     <>

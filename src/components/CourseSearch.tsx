@@ -4,8 +4,7 @@ import { useEffect, useState } from "react";
 import { courseSearch } from "@/lib/api/browser";
 import type { IndexedCourse } from "@/lib/api/course-index";
 
-const href = (code: string, year?: string) =>
-  `/course/?code=${encodeURIComponent(code.trim().toUpperCase())}${year ? `&year=${year}` : ""}`;
+const href = (code: string) => `/course/?code=${encodeURIComponent(code.trim().toUpperCase())}`;
 
 export default function CourseSearch() {
   const router = useRouter();
@@ -46,7 +45,7 @@ export default function CourseSearch() {
           {results.map((c) => (
             <li key={c.code}>
               <a href={href(c.code)}><strong>{c.code}</strong> {c.name}</a>
-              {c.years.map((y) => <a key={y.year} className="year" href={href(c.code, y.year)}>{y.year}</a>)}
+              <span className="year">{c.years[0]?.year}</span>
             </li>
           ))}
         </ul>

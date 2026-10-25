@@ -1,28 +1,29 @@
-import { fetchCatalogue } from "./client";
 import type { CourseIndex, IndexedCourse } from "./course-index";
+import type { CourseHit } from "./osiris";
 
 interface Options {
   index: CourseIndex;
-  fetch?: typeof fetch;
+  /** Loads the full catalogue (the published snapshot). */
+  load: () => Promise<CourseHit[]>;
 }
 
 /**
- * Search over the persisted course index. The whole catalogue is fetched in a
- * single request the first time (or when the stored copy is stale); `local`
- * answers instantly from whatever is already known.
+ * Search over the published catalogue. It is loaded once (shared between
+ * concurrent callers); `local` answers instantly from whatever is loaded.
  */
-export function createCourseSearch({ index, fetch: f }: Options) {
+export function createCourseSearch({ index, load }: Options) {
+  let loaded = false;
   let loading: Promise<void> | undefined;
 
   function ready(): Promise<void> {
-    if (index.isComplete()) return Promise.resolve();
-    loading ??= fetchCatalogue({ fetch: f })
-      .then(({ hits, total }) => {
+    if (loaded) return Promise.resolve();
+    loading ??= load()
+      .then((hits) => {
         index.add(hits);
-        if (total <= hits.length) index.markComplete();
+        loaded = true;
       })
       .catch(() => {
-        /* offline or blocked: search what we have, retry on the next search */
+        /* offline: search what we have, retry on the next search */
       })
       .finally(() => {
         loading = undefined;

@@ -1,18 +1,11 @@
 import { CourseIndex } from "./course-index";
 import { createCourseSearch } from "./course-search";
+import { loadCatalogue } from "./static-data";
 
 let shared: ReturnType<typeof createCourseSearch> | undefined;
 
-/** One search + persisted index per page load, backed by localStorage. */
+/** One search per page load over the catalogue published with the site. */
 export function courseSearch() {
-  if (!shared) {
-    let storage: Storage | undefined;
-    try {
-      storage = window.localStorage;
-    } catch {
-      /* storage blocked: in-memory only */
-    }
-    shared = createCourseSearch({ index: new CourseIndex({ storage }) });
-  }
+  shared ??= createCourseSearch({ index: new CourseIndex(), load: () => loadCatalogue() });
   return shared;
 }
